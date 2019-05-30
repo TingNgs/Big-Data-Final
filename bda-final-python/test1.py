@@ -25,9 +25,10 @@ def mean_sort(t):
 
 with open('dataLine.txt', 'r') as f:
     carNames = [line.strip() for line in f]
+    endWord = carNames[len(carNames)-1]
     for keywords in carNames:
         keywordList.append(keywords)
-        if(len(keywordList) == 5 or keywords==carNames[len(carNames)-1]) :
+        if(len(keywordList) == 5 or keywords==endWord) :
             newTarget = False
             tempDF = GetKeywordsTrend(keywordList)
             if(len(pList) == 0):
