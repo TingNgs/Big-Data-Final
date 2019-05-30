@@ -14,8 +14,8 @@ def GetKeywordsTrend(keywordsList):
     interest_over_time_df = pytrend.interest_over_time()
     return interest_over_time_df
 
-def FindTarget(pList):
-    for i in range(len(pList)):
+def FindTarget(pList,start):
+    for i in range(start,len(pList)):
         for j in range(len(pList[i]['data'])):
             if(pList[i]['data'][j] == 100):
                 return {"x":i,"y":j}
@@ -46,7 +46,7 @@ with open('dataLine.txt', 'r') as f:
                 pList.append({"carName":keywordList[i],"data":tempDF[keywordList[i]].tolist(),"mean":0})
 
             if(newTarget):
-                targetXY = FindTarget(pList)# Find the position of 100
+                targetXY = FindTarget(pList,targetXY['x'])# Find the position of 100
             
             # Clean up keywordList, append the top of pList to keywordList
             keywordList = []
