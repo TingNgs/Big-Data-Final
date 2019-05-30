@@ -10,7 +10,7 @@ pList=[]
 targetXY = {"x":0,"y":0}
 
 def GetKeywordsTrend(keywordsList):
-    pytrend.build_payload(keywordsList, cat=0, timeframe='today 3-m', geo='', gprop='')
+    pytrend.build_payload(keywordsList, cat=47, timeframe='2016-12-14 2017-01-25', geo='', gprop='')
     interest_over_time_df = pytrend.interest_over_time()
     return interest_over_time_df
 
@@ -38,10 +38,13 @@ with open('dataLine.txt', 'r') as f:
                 tempList = tempDF[keywordList[0]].tolist()
                 if(tempList[targetXY['y']] != 100): # check if 100 is still 100, if not change all pList
                     newTarget = True
-                    tempP = tempList[targetXY['y']]/100 
-                    for i in range(len(pList)):
-                        for j in range(len(pList[i]['data'])):
-                            pList[i]['data'][j] =pList[i]['data'][j]*tempP
+                    if(100 in tempList):
+                        pList[i]['data'] = tempList
+                    else:
+                        tempP = tempList[targetXY['y']]/100
+                        for i in range(len(pList)):
+                            for j in range(len(pList[i]['data'])):
+                                pList[i]['data'][j] =pList[i]['data'][j]*tempP
             
             for i in range (1,len(keywordList)): # Push all data into pList
                 pList.append({"carName":keywordList[i],"data":tempDF[keywordList[i]].tolist(),"mean":0})
@@ -51,6 +54,7 @@ with open('dataLine.txt', 'r') as f:
             # Clean up keywordList, append the top of pList to keywordList
             keywordList = []
             keywordList.append(pList[targetXY['x']]['carName'])
+
 
 for i in range (len(pList)): # Cal the new mean of all pList
     pList[i]['mean'] = statistics.mean(pList[i]['data'])
