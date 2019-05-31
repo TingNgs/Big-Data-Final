@@ -22,8 +22,5 @@ while(True):
             dataArray.append(data)
     i+=1;
 dataArray.sort()
-with open('data.txt', 'w') as outfile:  
+with open('CarNameData.txt', 'w') as outfile:  
     json.dump(dataArray, outfile)
-with open('dataLine.txt', 'a') as the_file:
-    for i in dataArray:
-        the_file.write(i+'\n')
