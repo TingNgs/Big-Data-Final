@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import re
 import json
 
-dataArray=[];
+dataArray = []
+brandArray = []
 
 i=1
 url = 'https://www.auto-data.net/en/results?brand=0&model=0&power1=&power2=&fuel[]=6&page='
@@ -20,7 +21,14 @@ while(True):
         data = re.sub(r" ?\([^)]+\)", "", data)
         if(not(data in dataArray)):
             dataArray.append(data)
+        brand = data.split(' ', 1)[0]
+        if(not(brand in brandArray)):
+            brandArray.append(brand)
     i+=1;
 dataArray.sort()
-with open('CarNameData.txt', 'w') as outfile:  
+brandArray.sort()
+with open('./data/CarNameData.txt', 'w') as outfile:  
     json.dump(dataArray, outfile)
+
+with open('./data/BrandData.txt', 'w') as outfile:  
+    json.dump(brandArray, outfile)

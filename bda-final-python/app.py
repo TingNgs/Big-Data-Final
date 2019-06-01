@@ -6,11 +6,25 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/get_car_data")
+@app.route("/get_car_data",methods=['Get'])
 def GetCarsData():
-    with open('CarNameData.txt') as json_file:  
-        carNames = json.load(json_file)
-        return jsonify(carNames)
+    with open('./data/CarNameData.txt') as json_file:  
+        return jsonify(json.load(json_file))
+
+@app.route("/get_brand_data",methods=['Get'])
+def GetBrandData():
+    with open('./data/BrandData.txt') as json_file:  
+        return jsonify(json.load(json_file))
+
+@app.route("/get_one_month_data",methods=['Get'])
+def GetOneMonthData():
+    with open('./data/OneMonthData.txt') as json_file:  
+        return jsonify(json.load(json_file))
+
+@app.route("/get_one_month_brand_data",methods=['Get'])
+def GetOneMonthBrandData():
+    with open('./data/BrandOneMonthData.txt') as json_file:  
+        return jsonify(json.load(json_file))
 
 @app.route("/get_trends_data",methods=['POST'])
 def GetTrendData():
