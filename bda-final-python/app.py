@@ -2,6 +2,7 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 from GetTrendsData import GetTrendsData
+from GetTrendsRateData import GetTrendsRateData
 import json
 
 app = Flask(__name__)
@@ -29,7 +30,12 @@ def GetOneMonthBrandData():
 @app.route("/get_trends_data",methods=['POST'])
 def GetTrendData():
     data = request.get_json()
-    return jsonify(GetTrendsData(data['carNames'],data['timeFrame']))
+    return jsonify(GetTrendsData(data['carNames'],data['timeFrame'],""))
+
+@app.route("/get_inc_trends",methods=['POST'])
+def GetTrendIncData():
+    data = request.get_json()
+    return jsonify(GetTrendsRateData(data['carNames'],data['timeFrame'],"")) 
 
 if __name__ == "__main__":
     app.run()

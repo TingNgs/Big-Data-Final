@@ -3,7 +3,7 @@ import json
 import statistics
 with open('./data/CarNameData.txt') as json_file:  
     dataArray = json.load(json_file)
-    oneMonthData = GetTrendsData(dataArray,"today 1-m")
+    oneMonthData = GetTrendsData(dataArray,"today 1-m","")
     with open('./data/OneMonthData.txt', 'w') as outfile:  
         json.dump(oneMonthData, outfile)
 

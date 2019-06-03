@@ -4,8 +4,8 @@ import statistics
 import time
 import json
 
-def GetKeywordsTrend(keywordsList,timeFrame,pytrend):
-    pytrend.build_payload(keywordsList, cat=47, timeframe=timeFrame)
+def GetKeywordsTrend(keywordsList,timeFrame,location,pytrend):
+    pytrend.build_payload(keywordsList, cat=47, timeframe=timeFrame ,geo=location)
     interest_over_time_df = pytrend.interest_over_time()
     return interest_over_time_df
 
@@ -19,8 +19,7 @@ def FindTarget(pList,start):
 def mean_sort(t):
     return t['mean']
 
-def GetTrendsData(carNames,timeFrame):
-    
+def GetTrendsData(carNames,timeFrame,location):
     pytrend = TrendReq()
     keywordList = []
     pList=[]
@@ -31,7 +30,7 @@ def GetTrendsData(carNames,timeFrame):
         keywordList.append(keyword)
         if(len(keywordList) == 5 or keyword==endWord):
             newTarget = False
-            tempDF = GetKeywordsTrend(keywordList,timeFrame,pytrend)
+            tempDF = GetKeywordsTrend(keywordList,timeFrame,location,pytrend)
             if(len(pList) == 0):
                 newTarget = True
                 dateTimeList = tempDF.index.strftime("%d/%m/%Y, %H:%M:%S").tolist()
