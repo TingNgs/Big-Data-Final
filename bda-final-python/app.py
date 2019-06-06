@@ -7,35 +7,43 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/get_car_data",methods=['Get'])
+
+@app.route("/get_car_data", methods=['Get'])
 def GetCarsData():
-    with open('./data/CarNameData.txt') as json_file:  
+    with open('./data/CarNameData.txt') as json_file:
         return jsonify(json.load(json_file))
 
-@app.route("/get_brand_data",methods=['Get'])
+
+@app.route("/get_brand_data", methods=['Get'])
 def GetBrandData():
-    with open('./data/BrandData.txt') as json_file:  
+    with open('./data/BrandData.txt') as json_file:
         return jsonify(json.load(json_file))
 
-@app.route("/get_one_month_data",methods=['Get'])
+
+@app.route("/get_one_month_data", methods=['Get'])
 def GetOneMonthData():
-    with open('./data/OneMonthData.txt') as json_file:  
+    with open('./data/OneMonthData.txt') as json_file:
         return jsonify(json.load(json_file))
 
-@app.route("/get_one_month_brand_data",methods=['Get'])
+
+@app.route("/get_one_month_brand_data", methods=['Get'])
 def GetOneMonthBrandData():
-    with open('./data/BrandOneMonthData.txt') as json_file:  
+    with open('./data/BrandOneMonthData.txt') as json_file:
         return jsonify(json.load(json_file))
 
-@app.route("/get_trends_data",methods=['POST'])
+
+@app.route("/get_trends_data", methods=['POST'])
 def GetTrendData():
     data = request.get_json()
-    return jsonify(GetTrendsData(data['carNames'],data['timeFrame'],""))
+    return jsonify(GetTrendsData(data['carNames'], data['timeFrame'], data['geo']))
 
-@app.route("/get_inc_trends",methods=['POST'])
+
+@app.route("/get_inc_trends", methods=['POST'])
 def GetTrendIncData():
     data = request.get_json()
-    return jsonify(GetTrendsRateData(data['carNames'],data['timeFrame'],"")) 
+    temp = GetTrendsRateData(data['carNames'], data['timeFrame'], data['geo'])
+    return jsonify(temp)
+
 
 if __name__ == "__main__":
     app.run()

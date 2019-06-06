@@ -47,6 +47,7 @@ def GetTrendsData(carNames,timeFrame,location):
                     newTarget = True
                     if(100 in tempList):
                         print("err",keywordList[0])
+                        #pList[targetXY['x']]['data'] = tempList
                     else:
                         tempP = tempList[targetXY['y']]/100
                         for i in range(len(pList)):
@@ -71,5 +72,5 @@ def GetTrendsData(carNames,timeFrame,location):
     pList.sort(key = mean_sort,reverse = True)# Sort pList by mean
     return [dateTimeList,pList]
 
-#print(GetTrendsData(['Aixam eAIXAM COMPACT','Aixam eAIXAM COUPE','Arcfox GT','Arcfox GT RACEEDITION','Artega Scalo'],"today 1-m"))
+#print(GetTrendsData(['Aixam AIXAM COMPACT','Aixam AIXAM COUPE','Arcfox GT','Arcfox GT RACEEDITION','Artega Scalo'],"today 12-m",""))
 
