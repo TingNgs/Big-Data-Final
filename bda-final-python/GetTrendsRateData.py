@@ -64,7 +64,7 @@ def GetMax(data):
     DataError = []
     maxData = {'error': 9999999999, 'p': 0, 'd': 0, 'q': 0}
     aicData = {'aic': 9999999999, 'p': 0, 'd': 0, 'q': 0}
-    for i in range(7):
+    for i in range(6):
         for j in range(3):
             for k in range(3):
                 tempData = test(data, i, j, k)
@@ -92,12 +92,17 @@ def GetPD(name, data, timeFrame):
         step = int(len(data)/3)
     if(timeFrame == "today 5-y"):
         step = int(len(data)/5)
-   # tempAns = Draw(data, tempData['aic']['p'],
-    #               tempData['aic']['d'], tempData['aic']['q'], step)
-    # if(len(tempAns) == 1 and tempAns[0] == 0):
-    tempAns = Draw(data, tempData['error']['p'],
+    print(step)
+    tempAns = Draw(data, tempData['aic']['p'],
+                   tempData['aic']['d'], tempData['aic']['q'], step)
+    if(len(tempAns) == 1 and tempAns[0] == 0):
+        tempAns = Draw(data, tempData['error']['p'],
                    tempData['error']['d'], tempData['error']['q'], step)
-
+    if(len(tempAns) == 1 and tempAns[0] == 0):
+        mean = statistics.mean(data)
+        tempAns = []
+        for i in range(step):
+            tempAns.append(mean)
     return tempAns
     # return Draw(data, tempData['p'], tempData['d'], tempData['q'])
 
@@ -108,6 +113,7 @@ def GetTrendsRateData(carNames, timeFrame, location):
     tempDF = GetKeywordsTrend(carNames, timeFrame, location, pytrend)
     tempDateList = tempDF.index.tolist()
     dateValue = tempDateList[1] - tempDateList[0]
+    
     lastDate = tempDateList[len(tempDateList)-1]
     date = []
     for keyword in carNames:
